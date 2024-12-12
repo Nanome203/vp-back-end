@@ -11,10 +11,10 @@ public class RestaurantContext : DbContext
     {
 
     }
-    DbSet<Account> Accounts => Set<Account>();
-    DbSet<Bill> Bills => Set<Bill>();
-    DbSet<BillInfo> BillInfo => Set<BillInfo>();
-    DbSet<Food> Foods => Set<Food>();
-    DbSet<FoodCategory> FoodCategories => Set<FoodCategory>();
-    DbSet<TableFood> Tables => Set<TableFood>();
+    public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<Bill> Bills => Set<Bill>();
+    public DbSet<BillInfo> BillInfo => Set<BillInfo>();
+    public DbSet<Food> Foods => Set<Food>();
+    public DbSet<FoodCategory> FoodCategories => Set<FoodCategory>();
+    public DbSet<TableFood> Tables => Set<TableFood>();
 }
