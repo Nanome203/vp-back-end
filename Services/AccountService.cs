@@ -10,6 +10,6 @@ public class AccountService(AccountDAO dao)
 
     public async Task<List<Account>> GetAll()
     {
-        return await accountDAO.GetAll();
+        return await accountDAO.GetAllAsync();
     }
 }

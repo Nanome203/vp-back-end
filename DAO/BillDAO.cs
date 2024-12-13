@@ -7,23 +7,23 @@ namespace vp_back_end.DAO;
 public class BillDAO(RestaurantContext context)
 {
     private readonly RestaurantContext _context = context;
-    public async Task<int> Create(Bill bill)
+    public async Task<int> CreateAsync(Bill bill)
     {
         await _context.Bills.AddAsync(bill);
         return await _context.SaveChangesAsync(); // Return the number of affected rows (>=0)
     }
-    public async Task<Bill?> Get(int id)
+    public async Task<Bill?> GetAsync(int id)
     {
         return await _context.Bills.SingleOrDefaultAsync(b => b.Id == id && b.IsHidden == 0);
     }
 
-    public async Task<List<Bill>> GetAll()
+    public async Task<List<Bill>> GetAllAsync()
     {
         return await _context.Bills.Where(b => b.IsHidden == 0).ToListAsync();
     }
-    public async Task<int> Update(Bill bill)
+    public async Task<int> UpdateAsync(Bill bill)
     {
-        var billToUpdate = await Get(bill.Id);
+        var billToUpdate = await GetAsync(bill.Id);
         if (billToUpdate != null)
         {
             billToUpdate.DateCheckIn = bill.DateCheckIn;
@@ -38,9 +38,9 @@ public class BillDAO(RestaurantContext context)
 
     }
 
-    public async Task<int> Delete(int id)
+    public async Task<int> DeleteAsync(int id)
     {
-        var billToDelete = await Get(id);
+        var billToDelete = await GetAsync(id);
         if (billToDelete != null)
         {
             billToDelete.IsHidden = 1;

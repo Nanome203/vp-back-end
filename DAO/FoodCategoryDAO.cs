@@ -7,23 +7,23 @@ namespace vp_back_end.DAO;
 public class FoodCategoryDAO(RestaurantContext context)
 {
     private readonly RestaurantContext _context = context;
-    public async Task<int> Create(FoodCategory category)
+    public async Task<int> CreateAsync(FoodCategory category)
     {
         await _context.FoodCategories.AddAsync(category);
         return await _context.SaveChangesAsync(); // Return the number of affected rows (>=0)
     }
-    public async Task<FoodCategory?> Get(int id)
+    public async Task<FoodCategory?> GetAsync(int id)
     {
         return await _context.FoodCategories.SingleOrDefaultAsync(f => f.Id == id && f.IsHidden == 0);
     }
 
-    public async Task<List<FoodCategory>> GetAll()
+    public async Task<List<FoodCategory>> GetAllAsync()
     {
         return await _context.FoodCategories.Where(f => f.IsHidden == 0).ToListAsync();
     }
-    public async Task<int> Update(FoodCategory category)
+    public async Task<int> UpdateAsync(FoodCategory category)
     {
-        var categoryToUpdate = await Get(category.Id);
+        var categoryToUpdate = await GetAsync(category.Id);
         if (categoryToUpdate != null)
         {
             categoryToUpdate.Name = category.Name;
@@ -33,9 +33,9 @@ public class FoodCategoryDAO(RestaurantContext context)
 
     }
 
-    public async Task<int> Delete(int id)
+    public async Task<int> DeleteAsync(int id)
     {
-        var categoryToDelete = await Get(id);
+        var categoryToDelete = await GetAsync(id);
         if (categoryToDelete != null)
         {
             categoryToDelete.IsHidden = 1;

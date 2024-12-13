@@ -8,23 +8,23 @@ public class AccountDAO(RestaurantContext context)
 {
     private readonly RestaurantContext _context = context;
 
-    public async Task<int> Create(Account account)
+    public async Task<int> CreateAsync(Account account)
     {
         await _context.Accounts.AddAsync(account);
         return await _context.SaveChangesAsync(); // Return the number of affected rows (>=0)
     }
-    public async Task<Account?> Get(string username)
+    public async Task<Account?> GetAsync(string username)
     {
         return await _context.Accounts.SingleOrDefaultAsync(a => a.UserName == username && a.IsHidden == 0);
     }
 
-    public async Task<List<Account>> GetAll()
+    public async Task<List<Account>> GetAllAsync()
     {
         return await _context.Accounts.Where(a => a.IsHidden == 0).ToListAsync();
     }
-    public async Task<int> Update(Account account)
+    public async Task<int> UpdateAsync(Account account)
     {
-        var accountToUpdate = await Get(account.UserName!);
+        var accountToUpdate = await GetAsync(account.UserName!);
         if (accountToUpdate != null)
         {
             accountToUpdate.DisplayName = account.DisplayName;
@@ -35,9 +35,9 @@ public class AccountDAO(RestaurantContext context)
 
     }
 
-    public async Task<int> Delete(string username)
+    public async Task<int> DeleteAsync(string username)
     {
-        var accountToDelete = await Get(username);
+        var accountToDelete = await GetAsync(username);
         if (accountToDelete != null)
         {
             accountToDelete.IsHidden = 1;
