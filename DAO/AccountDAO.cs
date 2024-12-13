@@ -20,7 +20,7 @@ public class AccountDAO(RestaurantContext context)
         return await _context.Accounts.AsNoTracking().SingleOrDefaultAsync(a => a.UserName == username);
     }
 
-    public async Task<IEnumerable<Account>> GetAll()
+    public async Task<List<Account>> GetAll()
     {
         return await _context.Accounts.AsNoTracking().ToListAsync();
     }

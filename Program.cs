@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using vp_back_end.DAO;
 using vp_back_end.Data;
+using vp_back_end.Models;
+using vp_back_end.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +15,20 @@ builder.Services.AddSwaggerGen();
 // Add the database context
 builder.Services.AddDbContext<RestaurantContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 // Add Service Layer
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<BillService>();
+builder.Services.AddScoped<BillInfoService>();
+builder.Services.AddScoped<FoodService>();
+builder.Services.AddScoped<FoodCategoryService>();
+builder.Services.AddScoped<TableFoodService>();
 
 // Add DAO 
 builder.Services.AddScoped<AccountDAO>();
+builder.Services.AddScoped<BillDAO>();
+builder.Services.AddScoped<BillInfoDAO>();
+builder.Services.AddScoped<FoodDAO>();
+builder.Services.AddScoped<FoodCategoryDAO>();
+builder.Services.AddScoped<TableFoodDAO>();
 
 var app = builder.Build();
 
