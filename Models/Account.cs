@@ -21,4 +21,6 @@ public class Account
 
     [Required]
     public int Type { get; set; } = 0;
+    [Required]
+    public int IsHidden { get; set; } = 0;
 }

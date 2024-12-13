@@ -14,12 +14,12 @@ public class BillDAO(RestaurantContext context)
     }
     public async Task<Bill?> Get(int id)
     {
-        return await _context.Bills.AsNoTracking().SingleOrDefaultAsync(b => b.Id == id);
+        return await _context.Bills.SingleOrDefaultAsync(b => b.Id == id && b.IsHidden == 0);
     }
 
     public async Task<List<Bill>> GetAll()
     {
-        return await _context.Bills.AsNoTracking().ToListAsync();
+        return await _context.Bills.Where(b => b.IsHidden == 0).ToListAsync();
     }
     public async Task<int> Update(Bill bill)
     {
@@ -43,7 +43,7 @@ public class BillDAO(RestaurantContext context)
         var billToDelete = await Get(id);
         if (billToDelete != null)
         {
-            _context.Bills.Remove(billToDelete);
+            billToDelete.IsHidden = 1;
         }
         return await _context.SaveChangesAsync();
     }

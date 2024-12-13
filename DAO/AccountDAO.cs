@@ -15,12 +15,12 @@ public class AccountDAO(RestaurantContext context)
     }
     public async Task<Account?> Get(string username)
     {
-        return await _context.Accounts.AsNoTracking().SingleOrDefaultAsync(a => a.UserName == username);
+        return await _context.Accounts.SingleOrDefaultAsync(a => a.UserName == username && a.IsHidden == 0);
     }
 
     public async Task<List<Account>> GetAll()
     {
-        return await _context.Accounts.AsNoTracking().ToListAsync();
+        return await _context.Accounts.Where(a => a.IsHidden == 0).ToListAsync();
     }
     public async Task<int> Update(Account account)
     {
@@ -40,7 +40,7 @@ public class AccountDAO(RestaurantContext context)
         var accountToDelete = await Get(username);
         if (accountToDelete != null)
         {
-            _context.Accounts.Remove(accountToDelete);
+            accountToDelete.IsHidden = 1;
         }
         return await _context.SaveChangesAsync();
     }

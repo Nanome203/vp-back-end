@@ -28,6 +28,8 @@ public class Bill
 
     [Required]
     public float TotalPrice { get; set; } = 0;
+    [Required]
+    public int IsHidden { get; set; } = 0;
 
     [ForeignKey("IdTable")]
     public TableFood? TableFood { get; set; }

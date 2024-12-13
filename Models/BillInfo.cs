@@ -18,6 +18,8 @@ public class BillInfo
 
     [Required]
     public int Count { get; set; } = 0;
+    [Required]
+    public int IsHidden { get; set; } = 0;
 
     [ForeignKey("IdBill")]
     public Bill? Bill { get; set; }

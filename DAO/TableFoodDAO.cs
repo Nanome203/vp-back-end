@@ -14,12 +14,12 @@ public class TableFoodDAO(RestaurantContext context)
     }
     public async Task<TableFood?> Get(int id)
     {
-        return await _context.Tables.AsNoTracking().SingleOrDefaultAsync(b => b.Id == id);
+        return await _context.Tables.SingleOrDefaultAsync(b => b.Id == id && b.IsHidden == 0);
     }
 
     public async Task<List<TableFood>> GetAll()
     {
-        return await _context.Tables.AsNoTracking().ToListAsync();
+        return await _context.Tables.Where(b => b.IsHidden == 0).ToListAsync();
     }
     public async Task<int> Update(TableFood table)
     {
@@ -39,7 +39,7 @@ public class TableFoodDAO(RestaurantContext context)
         var tableToDelete = await Get(id);
         if (tableToDelete != null)
         {
-            _context.Tables.Remove(tableToDelete);
+            tableToDelete.IsHidden = 1;
         }
         return await _context.SaveChangesAsync();
     }
