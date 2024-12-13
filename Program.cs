@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using vp_back_end.DAO;
 using vp_back_end.Data;
-using vp_back_end.Models;
 using vp_back_end.Services;
 
 var builder = WebApplication.CreateBuilder(args);
