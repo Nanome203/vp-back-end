@@ -8,8 +8,12 @@ public class AccountService(AccountDAO dao)
 {
     private readonly AccountDAO accountDAO = dao;
 
-    public async Task<List<Account>> GetAll()
+    public async Task<List<Account>> GetAllAsync()
     {
         return await accountDAO.GetAllAsync();
+    }
+    public async Task<Account> GetAsync(string username)
+    {
+        return await accountDAO.GetAsync(username);
     }
 }
