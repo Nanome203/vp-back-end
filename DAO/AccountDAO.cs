@@ -15,7 +15,7 @@ public class AccountDAO(RestaurantContext context)
     }
     public async Task<Account?> GetAsync(string username)
     {
-        return await _context.Accounts.SingleOrDefaultAsync(a => a.UserName == username && a.IsHidden == 0);
+        return await _context.Accounts.SingleOrDefaultAsync(a => a.UserName == username);
     }
 
     public async Task<List<Account>> GetAllAsync()
