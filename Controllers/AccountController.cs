@@ -25,5 +25,13 @@ namespace vp_back_end.Controllers
             }
             return Ok(account);
         }
+        [HttpPost]
+        public async Task<ActionResult<int>> CreateAsync(Account account)
+        {
+            var result = await accountService.CreateAsync(account);
+            if (result == 0)
+                return BadRequest();
+            return NoContent();
+        }
     }
 }
