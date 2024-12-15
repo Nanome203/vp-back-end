@@ -27,6 +27,7 @@ public class AccountDAO(RestaurantContext context)
         var accountToUpdate = await GetAsync(account.UserName!);
         if (accountToUpdate != null)
         {
+            accountToUpdate.UserName = account.UserName;
             accountToUpdate.DisplayName = account.DisplayName;
             accountToUpdate.PassWord = account.PassWord;
             accountToUpdate.Type = account.Type;

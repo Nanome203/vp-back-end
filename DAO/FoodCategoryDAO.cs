@@ -26,6 +26,7 @@ public class FoodCategoryDAO(RestaurantContext context)
         var categoryToUpdate = await GetAsync(category.Id);
         if (categoryToUpdate != null)
         {
+            categoryToUpdate.Id = category.Id;
             categoryToUpdate.Name = category.Name;
             categoryToUpdate.IsHidden = category.IsHidden;
         }
