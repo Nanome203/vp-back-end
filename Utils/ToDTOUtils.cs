@@ -75,6 +75,21 @@ public static class ToDTOUtils
         return dtoList;
     }
 
+    public static TableFoodDTO ToTableFoodDTO(TableFood tb, Bill bill)
+    {
+        int billId = -1;
+        if (bill != null)
+        {
+            billId = bill.Id;
+        }
+        return new TableFoodDTO
+        {
+            Id = tb.Id,
+            Name = tb.Name,
+            Status = tb.Status,
+            UnpaidBillId = billId
+        };
+    }
     public static List<BillInfoDTO> ToBillInfoDTOList(List<BillInfo> list)
     {
         List<BillInfoDTO> dtoList = new List<BillInfoDTO>();
