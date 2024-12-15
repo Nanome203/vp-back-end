@@ -60,4 +60,18 @@ public static class ToDTOUtils
         }
         return dtoList;
     }
+
+    public static List<TableFoodDTO> ToTableFoodDTO(List<TableFood> list)
+    {
+        List<TableFoodDTO> dtoList = new List<TableFoodDTO>();
+        foreach (var item in list)
+        {
+            TableFoodDTO dto = new TableFoodDTO();
+            dto.Id = item.Id;
+            dto.Name = item.Name;
+            dto.Status = item.Status;
+            dtoList.Add(dto);
+        }
+        return dtoList;
+    }
 }
