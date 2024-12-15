@@ -62,16 +62,16 @@ FROM Account;
 INSERT INTO TableFood
     (name, status, isHidden)
 VALUES
-    (N'Bàn 1', N'Trống', 0),
-    (N'Bàn 2', N'Trống', 0),
-    (N'Bàn 3', N'Trống', 0),
-    (N'Bàn 4', N'Có khách', 0),
-    (N'Bàn 5', N'Có khách', 0),
-    (N'Bàn 6', N'Trống', 0),
-    (N'Bàn 7', N'Có khách', 0),
-    (N'Bàn 8', N'Có khách', 0),
-    (N'Bàn 9', N'Trống', 0),
-    (N'Bàn 10', N'Trống', 0);
+    (N'Bàn 1', N'Chưa hoạt động', 0),
+    (N'Bàn 2', N'Chưa hoạt động', 0),
+    (N'Bàn 3', N'Chưa hoạt động', 0),
+    (N'Bàn 4', N'Chờ thanh toán', 0),
+    (N'Bàn 5', N'Đang hoạt động', 0),
+    (N'Bàn 6', N'Chưa hoạt động', 0),
+    (N'Bàn 7', N'Đang hoạt động', 0),
+    (N'Bàn 8', N'Đang hoạt động', 0),
+    (N'Bàn 9', N'Chưa hoạt động', 0),
+    (N'Bàn 10', N'Chưa hoạt động', 0);
 
 SELECT *
 FROM TableFood;
@@ -79,13 +79,13 @@ FROM TableFood;
 -- Thêm Bill (50 hóa đơn)
 SET DATEFORMAT DMY;
 INSERT INTO Bill
-    (DateCheckIn, DateCheckOut, idTable, isServed, status, discount, totalPrice)
+    (DateCheckIn, DateCheckOut, idTable, status, discount, totalPrice)
 VALUES
-    ('01-01-2024 12:00', '01-01-2024 13:30', 4, 1, 1, 10, 300000),
-    ('01-01-2024 12:30', '01-01-2024 14:00', 5, 1, 1, 0, 200000),
-    ('02-01-2024 18:00', '02-01-2024 20:00', 7, 1, 1, 5, 350000),
-    ('03-01-2024 19:00', '03-01-2024 21:00', 8, 1, 1, 0, 400000),
-    ('04-01-2024 11:00', '04-01-2024 12:30', 6, 1, 0, 0, 150000);
+    ('01-01-2024 12:00', '01-01-2024 13:30', 4,  1, 10, 300000),
+    ('01-01-2024 12:30', '01-01-2024 14:00', 5, 1, 0, 200000),
+    ('02-01-2024 18:00', '02-01-2024 20:00', 7, 1, 5, 350000),
+    ('03-01-2024 19:00', '03-01-2024 21:00', 8, 1, 0, 400000),
+    ('04-01-2024 11:00', '04-01-2024 12:30', 6, 0, 0, 150000);
 
 -- Tiếp tục tạo 50 hóa đơn lặp lại
 DECLARE @counter INT = 1;
