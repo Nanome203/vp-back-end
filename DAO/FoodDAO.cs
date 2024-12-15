@@ -14,12 +14,12 @@ public class FoodDAO(RestaurantContext context)
     }
     public async Task<Food?> GetAsync(int id)
     {
-        return await _context.Foods.SingleOrDefaultAsync(f => f.Id == id && f.IsHidden == 0);
+        return await _context.Foods.Include(f => f.FoodCategory).SingleOrDefaultAsync(f => f.Id == id && f.IsHidden == 0);
     }
 
     public async Task<List<Food>> GetAllAsync()
     {
-        return await _context.Foods.Where(f => f.IsHidden == 0).ToListAsync();
+        return await _context.Foods.Include(f => f.FoodCategory).Where(f => f.IsHidden == 0).ToListAsync();
     }
     public async Task<int> UpdateAsync(Food food)
     {
@@ -28,6 +28,7 @@ public class FoodDAO(RestaurantContext context)
         {
             foodToUpdate.Name = food.Name;
             foodToUpdate.IdCategory = food.IdCategory;
+            foodToUpdate.ImageLink = food.ImageLink;
             foodToUpdate.Price = food.Price;
             foodToUpdate.IsHidden = food.IsHidden;
         }
