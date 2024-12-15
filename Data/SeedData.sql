@@ -92,13 +92,13 @@ DECLARE @counter INT = 1;
 WHILE @counter <= 45
 BEGIN
     INSERT INTO Bill
-        (DateCheckIn, DateCheckOut, idTable, isServed, status, discount, totalPrice)
+        (DateCheckIn, DateCheckOut, idTable, status, discount, totalPrice)
     VALUES
         (
             DATEADD(DAY, @counter, '01-01-2024 12:00'),
             DATEADD(HOUR, 2, DATEADD(DAY, @counter, '01-01-2024 12:00')),
             (@counter % 10) + 1, -- Gán idTable ngẫu nhiên từ 1 đến 10
-            1, 1, -- isServed và status luôn 1
+            1, -- isServed và status luôn 1
             (@counter % 3) * 5, -- Discount 0, 5 hoặc 10%
             200000 + (@counter % 5) * 50000 -- Tổng tiền thay đổi ngẫu nhiên
     );
