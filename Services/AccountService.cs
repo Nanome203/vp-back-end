@@ -2,7 +2,9 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Constraints;
 using vp_back_end.DAO;
+using vp_back_end.DTO;
 using vp_back_end.Models;
+using vp_back_end.Utils;
 
 namespace vp_back_end.Services;
 
@@ -14,9 +16,10 @@ public class AccountService(AccountDAO dao)
     {
         return await accountDAO.GetAllAsync(type);
     }
-    public async Task<Account> GetAsync(string username)
+    public async Task<AccountDTO> GetAsync(string username)
     {
-        return await accountDAO.GetAsync(username);
+        var account = await accountDAO.GetAsync(username);
+        return ToDTOUtils.ToAccountDTO(account);
     }
 
     public async Task<int> CreateAsync(Account account)

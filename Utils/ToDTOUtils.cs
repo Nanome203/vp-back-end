@@ -74,4 +74,66 @@ public static class ToDTOUtils
         }
         return dtoList;
     }
+
+    public static List<BillInfoDTO> ToBillInfoDTO(List<BillInfo> list)
+    {
+        List<BillInfoDTO> dtoList = new List<BillInfoDTO>();
+        foreach (var item in list)
+        {
+            BillInfoDTO dto = new BillInfoDTO();
+            dto.Id = item.Id;
+            dto.IdBill = item.IdBill;
+            dto.IdFood = item.IdFood;
+            dto.Count = item.Count;
+            dtoList.Add(dto);
+        }
+        return dtoList;
+    }
+    public static List<AccountDTO> ToAccountDTO(List<Account> list)
+    {
+        List<AccountDTO> dtoList = new List<AccountDTO>();
+        foreach (var item in list)
+        {
+            AccountDTO dto = new AccountDTO();
+            dto.UserName = item.UserName;
+            dto.DisplayName = item.DisplayName;
+            dto.PassWord = item.PassWord;
+            dto.Type = item.Type;
+            dtoList.Add(dto);
+        }
+        return dtoList;
+    }
+
+    public static AccountDTO ToAccountDTO(Account item)
+    {
+        AccountDTO dto = new()
+        {
+            UserName = item.UserName,
+            DisplayName = item.DisplayName,
+            PassWord = item.PassWord,
+            Type = item.Type
+        };
+        return dto;
+    }
+
+    public static List<BillDTO> ToBillDTO(List<Bill> list)
+    {
+        List<BillDTO> dtoList = new List<BillDTO>();
+        foreach (var item in list)
+        {
+            BillDTO dto = new BillDTO();
+            dto.Id = item.Id;
+            dto.DateCheckIn = item.DateCheckIn;
+            dto.DateCheckOut = item.DateCheckOut;
+            dto.IdTable = item.IdTable;
+            dto.IsServed = item.IsServed;
+            dto.Status = item.Status;
+            dto.Discount = item.Discount;
+            dto.TotalPrice = item.TotalPrice;
+
+
+            dtoList.Add(dto);
+        }
+        return dtoList;
+    }
 }

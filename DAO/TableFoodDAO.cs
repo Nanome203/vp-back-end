@@ -26,6 +26,7 @@ public class TableFoodDAO(RestaurantContext context)
         var tableToUpdate = await GetAsync(table.Id);
         if (tableToUpdate != null)
         {
+            tableToUpdate.Id = table.Id;
             tableToUpdate.Name = table.Name;
             tableToUpdate.Status = table.Status;
             tableToUpdate.IsHidden = table.IsHidden;
