@@ -18,9 +18,6 @@ public class Bill
     public int IdTable { get; set; }
 
     [Required]
-    public int IsServed { get; set; } = 0;
-
-    [Required]
     public int Status { get; set; } = 0;
 
     [Required]

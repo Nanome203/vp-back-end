@@ -117,7 +117,6 @@ public static class ToDTOUtils
             DateCheckIn = bill.DateCheckIn,
             DateCheckOut = bill.DateCheckOut,
             IdTable = bill.IdTable,
-            IsServed = bill.IsServed,
             Status = bill.Status,
             Discount = bill.Discount,
             TotalPrice = bill.TotalPrice,
@@ -164,7 +163,6 @@ public static class ToDTOUtils
             dto.DateCheckIn = item.DateCheckIn;
             dto.DateCheckOut = item.DateCheckOut;
             dto.IdTable = item.IdTable;
-            dto.IsServed = item.IsServed;
             dto.Status = item.Status;
             dto.Discount = item.Discount;
             dto.TotalPrice = item.TotalPrice;

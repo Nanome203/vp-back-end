@@ -9,7 +9,6 @@ public class BillDTO
     public DateTime DateCheckIn { get; set; } = DateTime.Now;
     public DateTime? DateCheckOut { get; set; }
     public int IdTable { get; set; }
-    public int IsServed { get; set; } = 0;
     public int Status { get; set; } = 0;
     public int Discount { get; set; } = 0;
     public float TotalPrice { get; set; } = 0;

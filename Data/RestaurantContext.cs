@@ -31,7 +31,6 @@ public class RestaurantContext : DbContext
         modelBuilder.Entity<Bill>(entity =>
         {
             entity.Property(e => e.DateCheckIn).HasDefaultValueSql("GETDATE()");
-            entity.Property(e => e.IsServed).HasDefaultValue(0);
             entity.Property(e => e.Status).HasDefaultValue(0);
             entity.Property(e => e.Discount).HasDefaultValue(0);
             entity.Property(e => e.TotalPrice).HasDefaultValue(0);
