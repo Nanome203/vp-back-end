@@ -10,10 +10,10 @@ namespace vp_back_end.Controllers
     public class AccountController(AccountService service) : ControllerBase
     {
         private readonly AccountService accountService = service;
-        [HttpGet]
-        public async Task<ActionResult<List<Account>>> GetAllAsync()
+        [HttpGet("type/{type}")]
+        public async Task<ActionResult<List<Account>>> GetAllAsync(int type)
         {
-            return await accountService.GetAllAsync();
+            return await accountService.GetAllAsync(type);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Account>> GetAsync(string id)
@@ -29,6 +29,22 @@ namespace vp_back_end.Controllers
         public async Task<ActionResult<int>> CreateAsync(Account account)
         {
             var result = await accountService.CreateAsync(account);
+            if (result == 0)
+                return BadRequest();
+            return NoContent();
+        }
+        [HttpPut]
+        public async Task<ActionResult<int>> UpdateAsync(Account account)
+        {
+            var result = await accountService.UpdateAsync(account);
+            if (result == 0)
+                return BadRequest();
+            return NoContent();
+        }
+        [HttpDelete]
+        public async Task<ActionResult<int>> DeleteAsync(string id)
+        {
+            var result = await accountService.DeleteAsync(id);
             if (result == 0)
                 return BadRequest();
             return NoContent();

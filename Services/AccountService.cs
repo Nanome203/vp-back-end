@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
 using vp_back_end.DAO;
 using vp_back_end.Models;
 
@@ -9,9 +10,9 @@ public class AccountService(AccountDAO dao)
 {
     private readonly AccountDAO accountDAO = dao;
 
-    public async Task<List<Account>> GetAllAsync()
+    public async Task<List<Account>> GetAllAsync(int type)
     {
-        return await accountDAO.GetAllAsync();
+        return await accountDAO.GetAllAsync(type);
     }
     public async Task<Account> GetAsync(string username)
     {
@@ -23,6 +24,36 @@ public class AccountService(AccountDAO dao)
         try
         {
             var result = await accountDAO.CreateAsync(account);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Oh shit. Exception occurred dumb ass");
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public async Task<int> UpdateAsync(Account account)
+    {
+        try
+        {
+            var result = await accountDAO.UpdateAsync(account);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Oh shit. Exception occurred dumb ass");
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public async Task<int> DeleteAsync(string id)
+    {
+        try
+        {
+            var result = await accountDAO.DeleteAsync(id);
         }
         catch (Exception ex)
         {
