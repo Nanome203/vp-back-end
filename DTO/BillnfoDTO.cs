@@ -6,6 +6,7 @@ public class BillInfoDTO
 {
     public int Id { get; set; }
     public int IdFood { get; set; }
-    public string? FoodName { get; set;}
+    public string? FoodName { get; set; }
+    public float Price { get; set; }
     public int Count { get; set; } = 0;
 }

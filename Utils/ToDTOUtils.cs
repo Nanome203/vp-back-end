@@ -108,7 +108,8 @@ public static class ToDTOUtils
             Id = billInfo.Id,
             IdFood = billInfo.Food.Id,
             FoodName = billInfo.Food.Name,
-            Count = billInfo.Count
+            Count = billInfo.Count,
+            Price = billInfo.Food.Price
         };
         return dto;
     }
