@@ -12,7 +12,7 @@ namespace vp_back_end.Controllers
     {
         private readonly BillService billService = service;
         [HttpGet]
-        public async Task<ActionResult<List<BillDTO>>> GetAllAsync(DateTime dateStart, DateTime dateEnd)
+        public async Task<ActionResult<List<BillDTO>>> GetAllAsync()
         {
             return await billService.GetAllAsync();
         }
