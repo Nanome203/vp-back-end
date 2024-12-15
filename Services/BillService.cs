@@ -26,4 +26,16 @@ public class BillService(BillDAO dao)
             return null;
         return ToDTOUtils.ToBillDTO(bill);
     }
+
+    public async Task<int> DeleteAsync(int id)
+    {
+        try
+        {
+            return await billDAO.DeleteAsync(id);
+        }
+        catch
+        {
+            return 0;
+        }
+    }
 }

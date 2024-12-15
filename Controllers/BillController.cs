@@ -27,5 +27,16 @@ namespace vp_back_end.Controllers
             }
             return billDTO;
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAsync(int id)
+        {
+            var result = await billService.DeleteAsync(id);
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
     }
 }

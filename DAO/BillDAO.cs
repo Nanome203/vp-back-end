@@ -31,4 +31,14 @@ public class BillDAO(RestaurantContext context)
                     .Where(b => b.IsHidden == 0)
                     .SingleOrDefaultAsync(b => b.Id == id);
     }
+
+    public async Task<int> DeleteAsync(int id)
+    {
+        var billToDelete = await GetAsync(id);
+        if (billToDelete != null)
+        {
+            billToDelete.IsHidden = 1;
+        }
+        return await _context.SaveChangesAsync();
+    }
 }

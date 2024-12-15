@@ -14,6 +14,7 @@ public class BillDTO
     public int Discount { get; set; } = 0;
     public float TotalPrice { get; set; } = 0;
     // public TableFood? TableFood { get; set; }
-    public string? TableName {get; set;}
+    public int TableId { get; set; }
+    public string? TableName { get; set; }
     public List<BillInfoDTO>? BillInfos { get; set; }
 }
