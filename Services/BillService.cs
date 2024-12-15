@@ -18,4 +18,12 @@ public class BillService(BillDAO dao)
         return ToDTOUtils.ToBillDTOList(billDAOList);
 
     }
+
+    public async Task<BillDTO> GetAsync(int id)
+    {
+        var bill = await billDAO.GetAsync(id);
+        if (bill == null)
+            return null;
+        return ToDTOUtils.ToBillDTO(bill);
+    }
 }

@@ -16,5 +16,16 @@ namespace vp_back_end.Controllers
         {
             return await billService.GetAllAsync();
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BillDTO>> GetAsync(int id)
+        {
+            var billDTO = await billService.GetAsync(id);
+            if (billDTO == null)
+            {
+                return NotFound();
+            }
+            return billDTO;
+        }
     }
 }

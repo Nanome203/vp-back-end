@@ -17,6 +17,18 @@ public class BillDAO(RestaurantContext context)
         return await _context.Bills
                     .Include(b => b.TableFood)
                     .Include(b => b.BillInfos)
-                    .ThenInclude(b => b.Food).ToListAsync();
+                    .ThenInclude(b => b.Food)
+                    .Where(b => b.IsHidden == 0)
+                    .ToListAsync();
+    }
+
+    public async Task<Bill> GetAsync(int id)
+    {
+        return await _context.Bills
+                    .Include(b => b.TableFood)
+                    .Include(b => b.BillInfos)
+                    .ThenInclude(b => b.Food)
+                    .Where(b => b.IsHidden == 0)
+                    .SingleOrDefaultAsync(b => b.Id == id);
     }
 }
