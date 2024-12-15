@@ -20,6 +20,8 @@ public class Food
 
     [Required]
     public float Price { get; set; } = 0;
+    [MaxLength(255)]
+    public string ImageLink { get; set; } = "unavailable";
 
     [Required]
     public int IsHidden { get; set; } = 0;

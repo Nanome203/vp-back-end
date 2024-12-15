@@ -48,6 +48,7 @@ public class RestaurantContext : DbContext
         {
             entity.Property(e => e.Name).HasDefaultValue("Chưa đặt tên");
             entity.Property(e => e.Price).HasDefaultValue(0);
+            entity.Property(e => e.ImageLink).HasDefaultValue("unavailable");
             entity.Property(e => e.IsHidden).HasDefaultValue(0);
         });
 
