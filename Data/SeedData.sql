@@ -7,11 +7,11 @@ SET DATEFORMAT DMY
 INSERT INTO FoodCategory
     (name, isHidden)
 VALUES
-    (N'Hải sản/Seafood', 0),
-    (N'Gỏi/Salad', 0),
-    (N'Mì/Noodle', 0),
-    (N'Cơm/Rice', 0),
-    (N'Nước giải khát/Drinks', 0),
+    (N'Hải sản', 0),
+    (N'Gỏi', 0),
+    (N'Mì', 0),
+    (N'Cơm', 0),
+    (N'Nước giải khát', 0),
     (N'Nước ép', 0)
 
 
@@ -81,30 +81,31 @@ SET DATEFORMAT DMY;
 INSERT INTO Bill
     (DateCheckIn, DateCheckOut, idTable, status, discount, totalPrice)
 VALUES
-    ('01-01-2024 12:00', '01-01-2024 13:30', 4,  1, 10, 300000),
-    ('01-01-2024 12:30', '01-01-2024 14:00', 5, 1, 0, 200000),
-    ('02-01-2024 18:00', '02-01-2024 20:00', 7, 1, 5, 350000),
-    ('03-01-2024 19:00', '03-01-2024 21:00', 8, 1, 0, 400000),
-    ('04-01-2024 11:00', '04-01-2024 12:30', 6, 0, 0, 150000);
+    ('01-01-2024 12:00', '01-01-2024 13:30', 4, 0, 10, 300000),
+    --0: chưa thanh toán, 1: đã thanh toán
+    ('01-01-2024 12:30', '01-01-2024 14:00', 5, 0, 0, 200000),
+    ('02-01-2024 18:00', '02-01-2024 20:00', 7, 0, 5, 350000),
+    ('03-01-2024 19:00', '03-01-2024 21:00', 8, 0, 0, 400000),
+    ('04-01-2024 11:00', '04-01-2024 12:30', 6, 1, 0, 150000);
 
 -- Tiếp tục tạo 50 hóa đơn lặp lại
-DECLARE @counter INT = 1;
-WHILE @counter <= 45
-BEGIN
-    INSERT INTO Bill
-        (DateCheckIn, DateCheckOut, idTable, status, discount, totalPrice)
-    VALUES
-        (
-            DATEADD(DAY, @counter, '01-01-2024 12:00'),
-            DATEADD(HOUR, 2, DATEADD(DAY, @counter, '01-01-2024 12:00')),
-            (@counter % 10) + 1, -- Gán idTable ngẫu nhiên từ 1 đến 10
-            1, -- isServed và status luôn 1
-            (@counter % 3) * 5, -- Discount 0, 5 hoặc 10%
-            200000 + (@counter % 5) * 50000 -- Tổng tiền thay đổi ngẫu nhiên
-    );
+-- DECLARE @counter INT = 1;
+-- WHILE @counter <= 45
+-- BEGIN
+--     INSERT INTO Bill
+--         (DateCheckIn, DateCheckOut, idTable, status, discount, totalPrice)
+--     VALUES
+--         (
+--             DATEADD(DAY, @counter, '01-01-2024 12:00'),
+--             DATEADD(HOUR, 2, DATEADD(DAY, @counter, '01-01-2024 12:00')),
+--             (@counter % 10) + 1, -- Gán idTable ngẫu nhiên từ 1 đến 10
+--             1, -- isServed và status luôn 1
+--             (@counter % 3) * 5, -- Discount 0, 5 hoặc 10%
+--             200000 + (@counter % 5) * 50000 -- Tổng tiền thay đổi ngẫu nhiên
+--     );
 
-    SET @counter = @counter + 1;
-END;
+--     SET @counter = @counter + 1;
+-- END;
 
 SELECT *
 FROM Bill;
