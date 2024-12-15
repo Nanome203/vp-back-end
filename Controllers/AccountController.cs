@@ -10,6 +10,19 @@ namespace vp_back_end.Controllers
     public class AccountController(AccountService service) : ControllerBase
     {
         private readonly AccountService accountService = service;
+
+
+
+        [HttpGet("check")]
+        public async Task<ActionResult> CheckExistsAsync([FromQuery] string username, [FromQuery] string password)
+        {
+            var result = await accountService.CheckExistsAsync(username, password);
+            if (result == false)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
         [HttpGet("type/{type}")]
         public async Task<ActionResult<List<Account>>> GetAllAsync(int type)
         {

@@ -12,6 +12,17 @@ public class AccountService(AccountDAO dao)
 {
     private readonly AccountDAO accountDAO = dao;
 
+    public async Task<bool> CheckExistsAsync(string username, string password)
+    {
+        try
+        {
+            return await accountDAO.CheckExistsAsync(username, password);
+        }
+        catch
+        {
+            return false;
+        }
+    }
     public async Task<List<Account>> GetAllAsync(int type)
     {
         return await accountDAO.GetAllAsync(type);
