@@ -8,11 +8,15 @@ public class BillDAO(RestaurantContext context)
 {
     private readonly RestaurantContext _context = context;
 
-    public async Task<List<Bill>> GetAllAsync(DateTime dateStart, DateTime dateEnd)
+    public async Task<List<Bill>> GetAllAsync()
     {
-        return await _context.Bills.Where(b => b.IsHidden == 0 
-            && b.DateCheckOut <= dateEnd   
-            && b.DateCheckIn >= dateStart)
-        .ToListAsync();
+        // return await _context.Bills.Where(b => b.IsHidden == 0 
+        //     && b.DateCheckOut <= dateEnd   
+        //     && b.DateCheckIn >= dateStart)
+        // .ToListAsync();
+        return await _context.Bills
+                    .Include(b => b.TableFood)
+                    .Include(b => b.BillInfos)
+                    .ThenInclude(b => b.Food).ToListAsync();
     }
 }

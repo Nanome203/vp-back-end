@@ -34,5 +34,5 @@ public class Bill
     [ForeignKey("IdTable")]
     public TableFood? TableFood { get; set; }
 
-    public List<BillInfo>? BillInfos { get; set; }
+    public List<BillInfo> BillInfos { get; set; }
 }

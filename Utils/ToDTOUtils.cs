@@ -6,7 +6,7 @@ namespace vp_back_end.Utils;
 
 public static class ToDTOUtils
 {
-    public static List<FoodCategoryDTO> ToFoodCategoryDTO(List<FoodCategory> list)
+    public static List<FoodCategoryDTO> ToFoodCategoryDTOList(List<FoodCategory> list)
     {
         List<FoodCategoryDTO> dtoList = [];
         foreach (var item in list)
@@ -42,7 +42,7 @@ public static class ToDTOUtils
         };
     }
 
-    public static List<FoodDTO> ToFoodDTO(List<Food> list)
+    public static List<FoodDTO> ToFoodDTOList(List<Food> list)
     {
         List<FoodDTO> dtoList = [];
         foreach (var food in list)
@@ -61,7 +61,7 @@ public static class ToDTOUtils
         return dtoList;
     }
 
-    public static List<TableFoodDTO> ToTableFoodDTO(List<TableFood> list)
+    public static List<TableFoodDTO> ToTableFoodDTOList(List<TableFood> list)
     {
         List<TableFoodDTO> dtoList = new List<TableFoodDTO>();
         foreach (var item in list)
@@ -75,20 +75,57 @@ public static class ToDTOUtils
         return dtoList;
     }
 
-    public static List<BillInfoDTO> ToBillInfoDTO(List<BillInfo> list)
+    public static List<BillInfoDTO> ToBillInfoDTOList(List<BillInfo> list)
     {
         List<BillInfoDTO> dtoList = new List<BillInfoDTO>();
         foreach (var item in list)
         {
-            BillInfoDTO dto = new BillInfoDTO();
-            dto.Id = item.Id;
-            dto.IdBill = item.IdBill;
-            dto.IdFood = item.IdFood;
-            dto.Count = item.Count;
+            BillInfoDTO dto = ToBillInfoDTO(item);
             dtoList.Add(dto);
         }
         return dtoList;
     }
+
+    public static BillInfoDTO ToBillInfoDTO(BillInfo billInfo)
+    {
+        BillInfoDTO dto = new()
+        {
+            Id = billInfo.Id,
+            IdFood = billInfo.Food.Id,
+            FoodName = billInfo.Food.Name,
+            Count = billInfo.Count
+        };
+        return dto;
+    }
+
+    public static List<BillDTO> ToBillDTOList(List<Bill> list)
+    {
+        List<BillDTO> dtoList = [];
+        foreach (var item in list)
+        {
+            dtoList.Add(ToBillDTO(item));
+        }
+        return dtoList;
+    }
+    public static BillDTO ToBillDTO(Bill bill)
+    {
+        var billInfoList = bill.BillInfos;
+        var billInfoListDTO = ToBillInfoDTOList(billInfoList);
+        return new BillDTO()
+        {
+            Id = bill.Id,
+            DateCheckIn = bill.DateCheckIn,
+            DateCheckOut = bill.DateCheckOut,
+            IdTable = bill.IdTable,
+            IsServed = bill.IsServed,
+            Status = bill.Status,
+            Discount = bill.Discount,
+            TotalPrice = bill.TotalPrice,
+            TableName = bill.TableFood.Name,
+            BillInfos = billInfoListDTO
+        };
+    }
+
     public static List<AccountDTO> ToAccountDTO(List<Account> list)
     {
         List<AccountDTO> dtoList = new List<AccountDTO>();

@@ -14,7 +14,7 @@ public class FoodCategoryService(FoodCategoryDAO dao)
         try
         {
             var list = await foodCategoryDAO.GetAllAsync();
-            return ToDTOUtils.ToFoodCategoryDTO(list);
+            return ToDTOUtils.ToFoodCategoryDTOList(list);
         }
         catch (Exception ex)
         {

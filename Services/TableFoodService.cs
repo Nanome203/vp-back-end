@@ -12,7 +12,7 @@ public class TableFoodService(TableFoodDAO dao)
     public async Task<List<TableFoodDTO>> GetAllAsync()
     {
         var list = await tableFoodDAO.GetAllAsync();
-        return ToDTOUtils.ToTableFoodDTO(list);
+        return ToDTOUtils.ToTableFoodDTOList(list);
     }
     public async Task<int> CreateAsync(TableFood tableFood)
     {

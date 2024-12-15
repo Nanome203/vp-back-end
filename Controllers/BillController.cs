@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using vp_back_end.DTO;
 using vp_back_end.Models;
 using vp_back_end.Services;
 
@@ -11,9 +12,9 @@ namespace vp_back_end.Controllers
     {
         private readonly BillService billService = service;
         [HttpGet]
-        public async Task<ActionResult<List<Bill>>> GetAllAsync(DateTime dateStart, DateTime dateEnd)
+        public async Task<ActionResult<List<BillDTO>>> GetAllAsync(DateTime dateStart, DateTime dateEnd)
         {
-            return await billService.GetAllAsync(dateStart, dateEnd);
+            return await billService.GetAllAsync();
         }
     }
 }

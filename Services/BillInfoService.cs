@@ -15,7 +15,7 @@ public class BillInfoService(BillInfoDAO dao)
         try
         {
             var list = await billInfoDAO.GetAllAsync(IdTableFood, IdBill);
-            return ToDTOUtils.ToBillInfoDTO(list);
+            return ToDTOUtils.ToBillInfoDTOList(list);
         }
         catch (Exception ex)
         {
