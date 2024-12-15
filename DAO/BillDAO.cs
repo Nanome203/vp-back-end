@@ -8,6 +8,11 @@ public class BillDAO(RestaurantContext context)
 {
     private readonly RestaurantContext _context = context;
 
+    public async Task<int> CreateAsync(Bill bill)
+    {
+        await _context.Bills.AddAsync(bill);
+        return await _context.SaveChangesAsync();
+    }
     public async Task<List<Bill>> GetAllAsync()
     {
         // return await _context.Bills.Where(b => b.IsHidden == 0 

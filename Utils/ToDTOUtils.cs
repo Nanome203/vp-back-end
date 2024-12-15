@@ -120,7 +120,6 @@ public static class ToDTOUtils
             Status = bill.Status,
             Discount = bill.Discount,
             TotalPrice = bill.TotalPrice,
-            TableId = bill.TableFood.Id,
             TableName = bill.TableFood.Name,
             BillInfos = billInfoListDTO
         };

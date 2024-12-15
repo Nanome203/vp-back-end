@@ -11,6 +11,17 @@ namespace vp_back_end.Controllers
     public class BillController(BillService service) : ControllerBase
     {
         private readonly BillService billService = service;
+
+        [HttpPost]
+        public async Task<ActionResult> CreateAsync(BillDTO billDTO)
+        {
+            var result = await billService.CreateAsync(billDTO);
+            if (result == 0)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
         [HttpGet]
         public async Task<ActionResult<List<BillDTO>>> GetAllAsync()
         {

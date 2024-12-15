@@ -6,27 +6,27 @@ namespace vp_back_end.DAO;
 
 public class BillInfoDAO(RestaurantContext context)
 {
-    
+
     private readonly RestaurantContext _context = context;
     public async Task<int> CreateAsync(BillInfo billInfo)
     {
-        var existingBill = await _context.Bills
-            .FirstOrDefaultAsync(b => b.Id == billInfo.Bill.Id);
+        // var existingBill = await _context.Bills
+        //     .FirstOrDefaultAsync(b => b.Id == billInfo.Bill.Id);
 
-        if (existingBill == null)
-        {
-            _context.Bills.Add(billInfo.Bill);  // Thêm mới Bill
-        }
-        else
-        {
-            // Nếu Bill đã tồn tại, gán lại cho BillInfo để liên kết
-            billInfo.IdBill = existingBill.Id;
-        }
+        // if (existingBill == null)
+        // {
+        //     _context.Bills.Add(billInfo.Bill);  // Thêm mới Bill
+        // }
+        // else
+        // {
+        //     // Nếu Bill đã tồn tại, gán lại cho BillInfo để liên kết
+        //     billInfo.IdBill = existingBill.Id;
+        // }
 
-        var existingFood = await _context.Foods
-            .FirstOrDefaultAsync(f => f.Id == billInfo.Food.Id);
+        // var existingFood = await _context.Foods
+        //     .FirstOrDefaultAsync(f => f.Id == billInfo.Food.Id);
 
-        billInfo.IdFood = existingFood.Id;
+        // billInfo.IdFood = existingFood.Id;
 
         // Thêm BillInfo vào bảng BillInfo
         await _context.BillInfo.AddAsync(billInfo);
@@ -44,10 +44,10 @@ public class BillInfoDAO(RestaurantContext context)
         return await _context.BillInfo
             .Include(b => b.Bill)
             .ThenInclude(b => b.TableFood)
-            .Where(b => b.IsHidden == 0 && b.Bill.IsHidden == 0 
-                    && b.Bill.TableFood.IsHidden == 0 
-                    && b.Bill.Id == IdBill 
-                    && b.Bill.TableFood.Status == "Có khách" 
+            .Where(b => b.IsHidden == 0 && b.Bill.IsHidden == 0
+                    && b.Bill.TableFood.IsHidden == 0
+                    && b.Bill.Id == IdBill
+                    && b.Bill.TableFood.Status == "Có khách"
                     && b.Bill.TableFood.Id == IdTableFood)
             .ToListAsync();
     }
