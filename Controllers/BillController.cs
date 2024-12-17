@@ -12,6 +12,13 @@ namespace vp_back_end.Controllers
     {
         private readonly BillService billService = service;
 
+        [HttpPatch("{id}/checkout")]
+        public async Task<ActionResult> PayBillAsync(int id)
+        {
+            var result = await billService.PayBillAsync(id);
+            return result != 0 ? NoContent() : BadRequest();
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateAsync(BillDTO billDTO)
         {

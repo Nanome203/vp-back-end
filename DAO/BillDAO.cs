@@ -13,6 +13,14 @@ public class BillDAO(RestaurantContext context)
         await _context.Bills.AddAsync(bill);
         return await _context.SaveChangesAsync();
     }
+
+    public async Task<int> PayBillAsync(int id)
+    {
+        var bill = await GetAsync(id);
+        bill.Status = 1;
+        bill.TableFood.Status = "Chưa hoạt động";
+        return await _context.SaveChangesAsync();
+    }
     public async Task<List<Bill>> GetAllAsync()
     {
         // return await _context.Bills.Where(b => b.IsHidden == 0 

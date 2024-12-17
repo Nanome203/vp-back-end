@@ -41,6 +41,11 @@ public class BillService(BillDAO dao, TableFoodDAO dao2)
         return ToDTOUtils.ToBillDTO(bill);
     }
 
+    public async Task<int> PayBillAsync(int id)
+    {
+        return await billDAO.PayBillAsync(id);
+    }
+
     public async Task<int> DeleteAsync(int id)
     {
         try
