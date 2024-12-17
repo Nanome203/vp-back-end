@@ -31,12 +31,12 @@ public class AccountDAO(RestaurantContext context)
     {
         return await _context.Accounts.Where(a => a.IsHidden == 0 && a.Type == type).ToListAsync();
     }
-    public async Task<int> UpdateAsync(Account account)
+    public async Task<int> UpdateAsync(string id, Account account)
     {
-        var accountToUpdate = await GetAsync(account.UserName!);
+        var accountToUpdate = await GetAsync(id!);
         if (accountToUpdate != null)
         {
-            accountToUpdate.UserName = account.UserName;
+            accountToUpdate.UserName = id;
             accountToUpdate.DisplayName = account.DisplayName;
             accountToUpdate.PassWord = account.PassWord;
             accountToUpdate.Type = account.Type;

@@ -48,11 +48,11 @@ public class AccountService(AccountDAO dao)
         return 1;
     }
 
-    public async Task<int> UpdateAsync(Account account)
+    public async Task<int> UpdateAsync(string id, Account account)
     {
         try
         {
-            var result = await accountDAO.UpdateAsync(account);
+            var result = await accountDAO.UpdateAsync(id, account);
         }
         catch (Exception ex)
         {

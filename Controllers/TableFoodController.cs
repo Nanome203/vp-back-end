@@ -33,10 +33,10 @@ namespace vp_back_end.Controllers
                 return BadRequest();
             return NoContent();
         }
-        [HttpPut]
-        public async Task<ActionResult<int>> UpdateAsync(TableFood tableFood)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<int>> UpdateAsync(int id, TableFood tableFood)
         {
-            var result = await tableFoodService.UpdateAsync(tableFood);
+            var result = await tableFoodService.UpdateAsync(id, tableFood);
             if (result == 0)
                 return BadRequest();
             return NoContent();

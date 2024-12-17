@@ -21,12 +21,12 @@ public class FoodCategoryDAO(RestaurantContext context)
     {
         return await _context.FoodCategories.Where(f => f.IsHidden == 0).ToListAsync();
     }
-    public async Task<int> UpdateAsync(FoodCategory category)
+    public async Task<int> UpdateAsync(int id, FoodCategory category)
     {
         var categoryToUpdate = await GetAsync(category.Id);
         if (categoryToUpdate != null)
         {
-            categoryToUpdate.Id = category.Id;
+            categoryToUpdate.Id = id;
             categoryToUpdate.Name = category.Name;
             categoryToUpdate.IsHidden = category.IsHidden;
         }

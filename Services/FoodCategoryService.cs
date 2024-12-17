@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using vp_back_end.DAO;
 using vp_back_end.DTO;
 using vp_back_end.Models;
@@ -37,11 +38,11 @@ public class FoodCategoryService(FoodCategoryDAO dao)
         return 1;
     }
 
-    public async Task<int> UpdateAsync(FoodCategory foodCategory)
+    public async Task<int> UpdateAsync(int id, FoodCategory foodCategory)
     {
         try
         {
-            var result = await foodCategoryDAO.UpdateAsync(foodCategory);
+            var result = await foodCategoryDAO.UpdateAsync(id, foodCategory);
         }
         catch (Exception ex)
         {

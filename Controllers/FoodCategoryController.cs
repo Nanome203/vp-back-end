@@ -34,10 +34,10 @@ namespace vp_back_end.Controllers
                 return BadRequest();
             return NoContent();
         }
-        [HttpPut]
-        public async Task<ActionResult<int>> UpdateAsync(FoodCategory foodCategory)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<int>> UpdateAsync(int id, FoodCategory foodCategory)
         {
-            var result = await fcService.UpdateAsync(foodCategory);
+            var result = await fcService.UpdateAsync(id, foodCategory);
             if (result == 0)
                 return BadRequest();
             return NoContent();

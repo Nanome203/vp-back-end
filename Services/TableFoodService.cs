@@ -47,11 +47,11 @@ public class TableFoodService(TableFoodDAO dao, BillDAO dao2)
         return 1;
     }
 
-    public async Task<int> UpdateAsync(TableFood tableFood)
+    public async Task<int> UpdateAsync(int id, TableFood tableFood)
     {
         try
         {
-            var result = await tableFoodDAO.UpdateAsync(tableFood);
+            var result = await tableFoodDAO.UpdateAsync(id, tableFood);
         }
         catch (Exception ex)
         {
