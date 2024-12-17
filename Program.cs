@@ -24,6 +24,7 @@ builder.Services.AddScoped<BillInfoService>();
 builder.Services.AddScoped<FoodService>();
 builder.Services.AddScoped<FoodCategoryService>();
 builder.Services.AddScoped<TableFoodService>();
+builder.Services.AddScoped<TotalRevenueService>();
 
 // Add DAO 
 builder.Services.AddScoped<AccountDAO>();
@@ -32,6 +33,7 @@ builder.Services.AddScoped<BillInfoDAO>();
 builder.Services.AddScoped<FoodDAO>();
 builder.Services.AddScoped<FoodCategoryDAO>();
 builder.Services.AddScoped<TableFoodDAO>();
+builder.Services.AddScoped<TotalRevenueDAO>();
 
 var app = builder.Build();
 

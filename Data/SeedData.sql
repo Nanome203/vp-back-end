@@ -40,7 +40,7 @@ VALUES
 INSERT INTO Account
     (UserName, DisplayName, PassWord, Type)
 VALUES
-    (N'Admin', N'Trương Văn Bình', '225130235188221091155411012113412958127197241', 524287),
+    (N'Admin', N'Trương Văn Bình', 'admin', 524287),
     --MK: AD
     (N'Phuoc', N'Phan Ngọc Phước', '4229125024382100611251781583929172146215', 0),
     --MK: ST1
