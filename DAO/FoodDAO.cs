@@ -21,6 +21,10 @@ public class FoodDAO(RestaurantContext context)
     {
         return await _context.Foods.Include(f => f.FoodCategory).Where(f => f.IsHidden == 0).ToListAsync();
     }
+    public async Task<List<Food>> GetAllFoodForPopularityComputingAsync()
+    {
+        return await _context.Foods.Include(f => f.BillInfos).Where(f => f.IsHidden == 0).ToListAsync();
+    }
     public async Task<int> UpdateAsync(Food food)
     {
         var foodToUpdate = await GetAsync(food.Id);

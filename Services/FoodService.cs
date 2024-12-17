@@ -23,6 +23,19 @@ public class FoodService(FoodDAO dao)
         }
     }
 
+    public async Task<List<FoodCountDTO>> GetFoodPopularityAsync()
+    {
+        try
+        {
+            var list = await foodDAO.GetAllFoodForPopularityComputingAsync();
+            return ToDTOUtils.ToFoodCountDTOList(list);
+        }
+        catch (System.Exception)
+        {
+
+            return new List<FoodCountDTO>();
+        }
+    }
     public async Task<int> CreateAsync(FoodDTO dto)
     {
         var dao = ToDAOUtils.ToFoodDAO(dto);

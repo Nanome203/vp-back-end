@@ -20,6 +20,16 @@ namespace vp_back_end.Controllers
             return Ok(list);
         }
 
+        [HttpGet("popularity")]
+        public async Task<ActionResult<List<FoodCountDTO>>> GetFoodPopularityAsync()
+        {
+            var list = await foodService.GetFoodPopularityAsync();
+            if (list.Count == 0)
+            {
+                return NotFound();
+            }
+            return list;
+        }
         [HttpPost]
         public async Task<ActionResult> CreateAsync(FoodDTO foodDTO)
         {

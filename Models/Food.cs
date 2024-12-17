@@ -28,4 +28,5 @@ public class Food
 
     [ForeignKey("IdCategory")]
     public FoodCategory? FoodCategory { get; set; }
+    public List<BillInfo> BillInfos { get; set; }
 }

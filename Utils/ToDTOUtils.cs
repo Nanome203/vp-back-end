@@ -141,6 +141,32 @@ public static class ToDTOUtils
         };
     }
 
+    public static FoodCountDTO ToFoodCountDTO(Food food)
+    {
+        int Count = 0;
+        foreach (var billInfo in food.BillInfos)
+        {
+            Count += billInfo.Count;
+        }
+
+        return new FoodCountDTO
+        {
+            Name = food.Name,
+            Price = food.Price,
+            ImageLink = food.ImageLink,
+            Count = Count
+        };
+    }
+
+    public static List<FoodCountDTO> ToFoodCountDTOList(List<Food> list)
+    {
+        List<FoodCountDTO> foodCountDTOList = [];
+        foreach (var food in list)
+        {
+            foodCountDTOList.Add(ToFoodCountDTO(food));
+        }
+        return foodCountDTOList.OrderByDescending(obj => obj.Count).ToList();
+    }
     public static List<AccountDTO> ToAccountDTO(List<Account> list)
     {
         List<AccountDTO> dtoList = new List<AccountDTO>();
