@@ -60,7 +60,7 @@ public class RestaurantContext : DbContext
         modelBuilder.Entity<TableFood>(entity =>
         {
             entity.Property(e => e.Name).HasDefaultValue("Chưa đặt tên");
-            entity.Property(e => e.Status).HasDefaultValue("Trống");
+            entity.Property(e => e.Status).HasDefaultValue("Chưa hoạt động");
             entity.Property(e => e.IsHidden).HasDefaultValue(0);
         });
     }

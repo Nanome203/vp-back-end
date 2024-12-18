@@ -17,7 +17,7 @@ public class TableFood
     [Required]
     [MaxLength(100)]
     [Column(TypeName = "nvarchar")]
-    public string Status { get; set; } = "Trống";
+    public string Status { get; set; } = "Chưa hoạt động";
 
     [Required]
     public int IsHidden { get; set; } = 0;
