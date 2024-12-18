@@ -10,7 +10,7 @@ CREATE TABLE TableFood
 (
 	id INT IDENTITY PRIMARY KEY,
 	name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên' ,
-	status NVARCHAR(100) NOT NULL DEFAULT N'Trống',--Trống || Có người
+	status NVARCHAR(100) NOT NULL DEFAULT N'Chưa hoạt động',--Trống || Có người
 	isHidden INT NOT NULL DEFAULT 0 -- 1: Ẩn, 0: Hiện 
 )
 GO
@@ -73,41 +73,16 @@ CREATE TABLE BillInfo
 )
 GO
 
-CREATE PROC USP_GetAccountByUserName
-@userName NVARCHAR(100)
-AS 
-BEGIN
-	SELECT * FROM Account WHERE UserName = @userName
-END
-GO
-
-EXEC USP_GetAccountByUserName @userName = N'Admin'
-GO
-
-CREATE PROC USP_Login
-@userName NVARCHAR(100), @passWord NVARCHAR(100)
-AS
-BEGIN
-	SELECT * FROM Account WHERE UserName = @userName AND PassWord = @passWord
-END
-GO
-
 --Thêm bàn
 DECLARE @i INT = 1
 
-WHILE @i <= 100
+WHILE @i <= 20
 BEGIN
 	INSERT INTO TableFood (name) VALUES (N'Bàn ' + CAST(@i AS NVARCHAR(100)))
 	SET @i = @i + 1
 END
 GO
 
-CREATE PROC USP_GetTableList
-AS SELECT * FROM TableFood WHERE isHidden = 0
-GO
-
-EXEC USP_GetTableList
-GO
 
 --Thêm Food Category
 INSERT INTO FoodCategory (name) VALUES (N'Hải sản/Seafood')
@@ -119,47 +94,47 @@ INSERT INTO FoodCategory (name) VALUES (N'Nước ép')
 GO
 
 --Thêm Food 
-INSERT INTO Food (name, idCategory, price) VALUES (N'Hàu sữa nướng muối ớt', 1 , 150000 )
-INSERT INTO Food (name, idCategory, price) VALUES (N'Sò huyết hấp', 1 , 150000 )
-INSERT INTO Food (name, idCategory, price) VALUES (N'Mực hấp bia', 1 , 150000 )
-INSERT INTO Food (name, idCategory, price) VALUES (N'Canh ngao chua', 1 , 150000 )
-INSERT INTO Food (name, idCategory, price) VALUES (N'Cua nướng muối ớt', 1 , 130000 )
-INSERT INTO Food (name, idCategory, price) VALUES (N'Tôm hùm nướng phô mai', 1 , 250000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Canh cá chua', 1, 150000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Cá thu sốt cà chua', 1 , 200000 )
-INSERT INTO Food (name, idCategory, price) VALUES (N'Canh cua cà pháo', 1 , 70000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Gỏi xoài tôm khô', 2, 100000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Gỏi ngó sen tôm thịt', 2, 100000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Gỏi đu đủ trộn tai heo', 2, 100000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Gỏi xoài khô mực', 2, 100000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Gỏi cá trích', 2, 120000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Mì xào bò', 3, 75000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Mì xào trứng', 3, 65000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Mì xào tóp mỡ', 3, 75000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Mì xào hải sản', 3, 80000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Cơm chiên dương châu', 4, 90000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Cơm chiên thập cẩm', 4, 85000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Cơm chiên cua tôm', 4, 95000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Cơm chiên bọc trứng', 4, 85000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Cơm trắng', 4, 20000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Coca Cola', 5, 15000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Sữa đậu nành', 5, 12000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Fanta', 5, 15000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'7Up', 5, 15000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Nước lọc', 5, 10000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Xá xị', 5, 15000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Pepsi', 5, 15000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Nước tăng lực', 5, 15000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Nước cam', 6, 20000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Nước dưa hấu', 6, 20000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Nước ổi', 6, 20000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Nước tắc', 6, 10000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Nước chanh', 6, 20000)
-INSERT INTO Food (name, idCategory, price) VALUES (N'Chanh dây', 6, 15000)
+INSERT INTO Food (name, idCategory, price, imageLink) VALUES (N'Hàu sữa nướng muối ớt', 1 , 150000, 'https://gofood.vn//upload/r/tong-hop-tin-tuc/huong-dan-mon-ngon/cach-lam-hau-nuong-mo-hanh-gofood.jpg' ),
+(N'Sò huyết hấp', 1 , 150000, 'https://yummyday.vn/uploads/images/so-huyet-hap.jpg' ),
+(N'Mực hấp bia', 1 , 150000, 'https://i-giadinh.vnecdn.net/2023/11/02/Thnhphm11-1698908868-5353-1698908989.jpg' ),
+(N'Canh ngao chua', 1 , 150000, 'https://iv.vnecdn.net/giadinh/images/web/2021/05/29/cach-lam-canh-ngao-nau-dua-dua-com-mua-he-1622272767.jpg' ),
+(N'Cua nướng muối ớt', 1 , 130000, 'https://ngonviet247.com/wp-content/uploads/2019/04/Cua-Nuong-Muoi-Ot.jpg' ),
+(N'Tôm hùm nướng phô mai', 1 , 250000, 'https://www.cet.edu.vn/wp-content/uploads/2019/01/tom-hum-nuong-bo-toi-1.jpg'),
+(N'Canh cá chua', 1, 150000, 'https://i.ytimg.com/vi/zNhazi2P4yI/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCGDf9GlJVxCRR7KD0LBzoFAwEO-Q'),
+(N'Cá thu sốt cà chua', 1 , 200000, 'https://cdn.tgdd.vn/Files/2019/10/18/1209996/cach-nau-ca-thu-sot-ca-chua-ngon-kho-cuong-don-gian-tai-nha-6.jpg' ),
+(N'Canh cua cà pháo', 1 , 70000, 'https://icdn.24h.com.vn/upload/2-2023/images/2023-06-17/1687015124-ca-muoi-xoi-1686969354162405886485-width640height407.jpg'),
+(N'Gỏi xoài tôm khô', 2, 100000, 'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/680x482cq70/g%E1%BB%8Fi-xoai-tom-kho-recipe-main-photo.jpg'),
+(N'Gỏi ngó sen tôm thịt', 2, 100000, 'https://i.ytimg.com/vi/dTAHH5mQAZ0/maxresdefault.jpg'),
+(N'Gỏi đu đủ trộn tai heo', 2, 100000, 'https://i.ex-cdn.com/nongnghiep.vn/files/dungct/2021/07/16/goi-du-du-tron-tai-heo_nongnghiep-164519_483.jpg'),
+(N'Gỏi xoài khô mực', 2, 100000, 'https://cdn.tgdd.vn/Files/2021/08/21/1376848/cach-lam-goi-xoai-kho-muc-chua-ngot-ngon-kho-cuong-202201071120087279.jpg'),
+(N'Gỏi cá trích', 2, 120000, 'https://netspace.edu.vn/upload/images/2016/08/23/goi-ca-trich-1.jpg'),
+(N'Mì xào bò', 3, 75000, 'https://cdn.tgdd.vn/2021/12/CookDish/cach-lam-mi-goi-xao-thit-bo-don-gian-thom-ngon-hap-dan-ai-avt-1200x676.jpg'),
+(N'Mì xào trứng', 3, 65000, 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:quality(100)/2023_12_12_638379714166884908_cach-lam-mi-xao-trung.jpg'),
+(N'Mì xào tóp mỡ', 3, 75000, 'https://bizweb.dktcdn.net/100/021/974/products/z2339653011488-6d52524e3bfddadd93bf2a41e5ad7fa3.jpg?v=1613820770937'),
+(N'Mì xào hải sản', 3, 80000, 'https://netspace.edu.vn/app_assets/images/2021/07/18/cach-lam-mi-xao-hai-san-800.jpg'),
+(N'Cơm chiên dương châu', 4, 90000, 'https://vcdn1-giadinh.vnecdn.net/2022/12/30/Buoc-4-4-4790-1672386702.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=o6bWUsUkMEMh5QvVeBPRCQ'),
+(N'Cơm chiên thập cẩm', 4, 85000, 'https://i.ytimg.com/vi/iTg-z-INLPk/maxresdefault.jpg'),
+(N'Cơm chiên cua tôm', 4, 95000, 'https://i-giadinh.vnecdn.net/2021/10/21/comchiencua-1634789802-4785-1634789818.jpg'),
+(N'Cơm chiên bọc trứng', 4, 85000, 'https://cdn.tgdd.vn/2020/12/CookProduct/0-0000-1200x675.jpg'),
+(N'Cơm trắng', 4, 20000, 'https://image.bephoa.vn/data/thumb_750/2023/06/202306231118195612.webp'),
+(N'Coca Cola', 5, 15000, 'https://upload.wikimedia.org/wikipedia/commons/2/27/Coca_Cola_Flasche_-_Original_Taste.jpg'),
+(N'Sữa đậu nành', 5, 12000, 'https://upload.wikimedia.org/wikipedia/commons/0/0f/001-soymilk.jpg'),
+(N'Fanta', 5, 15000, 'https://bizweb.dktcdn.net/thumb/grande/100/236/638/products/18-55918f9b-1d05-41e3-ba21-8fe883e5128f.jpg?v=1726564978173'),
+(N'7Up', 5, 15000, 'https://product.hstatic.net/200000407109/product/nuoc-ngot-7-up-vi-chanh-330ml-201905301056152288_db464b14145048a885a28c42cbb2af9c.jpg'),
+(N'Nước lọc', 5, 10000, 'https://aquafinavietnam.com/wp-content/uploads/chai-aquafina-500ml-2.jpg'),
+(N'Xá xị', 5, 15000, 'https://www.lottemart.vn/media/catalog/product/8/9/8934588132117.jpg'),
+(N'Pepsi', 5, 15000, 'https://product.hstatic.net/1000288770/product/nuoc_ngot_pepsi_cola_lon_330ml_5d1df64d846f4f93aa666c723cea177d_master.jpg'),
+(N'Nước tăng lực', 5, 15000, 'https://product.hstatic.net/200000459373/product/8936148070563__41__097e9c61c44d4bbe8ef840f4bdd21df0_master.png'),
+(N'Nước cam', 6, 20000, 'https://www.lottemart.vn/media/catalog/product/cache/0x0/8/9/8934588192227.jpg.webp'),
+(N'Nước dưa hấu', 6, 20000, 'https://www.cet.edu.vn/wp-content/uploads/2020/06/cach-lam-nuoc-ep-dua-hau.jpg'),
+(N'Nước ổi', 6, 20000, 'https://file.hstatic.net/200000868155/file/post-tac-dung-nuoc-ep-oi-voi-suc-khoe-cach-uong-nuoc-ep-oi-dung-cach-1.jpg'),
+(N'Nước tắc', 6, 10000, 'https://cdn.tgdd.vn/Files/2019/07/08/1178150/cach-lam-nuoc-tac-muoi-dam-da-hon-nguoi-yeu-cu-cua-ban-201907112255586760.jpg'),
+(N'Nước chanh', 6, 20000, 'https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2024/2/24/photo-1708768261159-17087682613401304849137.jpeg'),
+(N'Chanh dây', 6, 15000, 'https://data-service.pharmacity.io/pmc-upload-media/production/pmc-ecm-asm/posts/uong-chanh-day-14.webp')
 GO
 
 -- Thêm tài khoản
-INSERT INTO Account (UserName, DisplayName, PassWord, Type) VALUES (N'Admin', N'Nguyễn Minh Nhật', 'admin', 524287), 
+INSERT INTO Account (UserName, DisplayName, PassWord, Type) VALUES (N'Admin', N'Nguyễn Minh Nhật', 'admin', 1), 
  (N'Tuong', N'Trịnh Kiến Tường', 'staff', 0), 
  (N'Triet', N'Phạm Minh Triết', 'staff', 0),
  (N'Lam', N'Nguyễn Cao Lãm', 'staff', 0),
@@ -168,250 +143,8 @@ INSERT INTO Account (UserName, DisplayName, PassWord, Type) VALUES (N'Admin', N'
  (N'Tung', N'Sơn Tùng MTP', 'staff', 0),
  (N'Dinh', N'Thái Đinh', 'staff', 0),
  (N'Quynh', N'Phan Mạnh Quỳnh', 'staff', 0)
-
-
-SELECT f.name, bi.count, f.price, f.price * bi.count AS totalPrice
-FROM BillInfo bi, Bill b, Food f
-WHERE bi.idBill = b.id AND bi.idFood = f.id AND b.idTable = 55
-
 GO
 
-CREATE PROC USP_InsertBill
-@idTable INT
-AS
-BEGIN
-	INSERT dbo.Bill 
-		( DateCheckIn,
-	      DateCheckOut,
-		  idTable,
-		  status,
-		  discount
-		)
-	VALUES (GETDATE(),
-			NULL,
-			@idTable,
-			0,
-			0
-		   )
-END 
-GO
-
-CREATE PROC USP_InsertBillInfo
-@idBill INT, @idFood INT, @count INT
-AS
-BEGIN
-	DECLARE @isExitsBillInfo INT
-	DECLARE @FoodCount INT = 1
-	SELECT @isExitsBillInfo = id, @FoodCount = dbb.count 
-	FROM dbo.BillInfo AS dbb
-	WHERE idBill = @idBill AND idFood = @idFood
-
-	IF (@isExitsBillInfo > 0)
-	BEGIN
-		DECLARE @newCount INT = @FoodCount + @count
-		IF (@newCount > 0)
-			UPDATE dbo.BillInfo SET count = @FoodCount + @count WHERE idBill = @idBill AND idFood = @idFood
-		ELSE
-			DELETE dbo.BillInfo WHERE idBill = @idBill AND idFood = @idFood
-	END 
-	ELSE
-	BEGIN
-		INSERT dbo.BillInfo
-			( idBill, idFood, count)
-		VALUES (@idBill, @idFood, @count)
-	END
-END 
-GO
-
-CREATE TRIGGER UTG_UpdateBillInfo
-ON BillInfo FOR INSERT, UPDATE
-AS 
-BEGIN
-DECLARE @idBill INT
-	
-	SELECT @idBill = idBill FROM Inserted
-	
-	DECLARE @idTable INT
-	
-	SELECT @idTable = idTable FROM dbo.Bill WHERE id = @idBill AND (status = 0	OR isServed = 0)
-	
-	DECLARE @count INT
-	SELECT @count = COUNT(*) FROM dbo.BillInfo WHERE idBill = @idBill
-	
-	IF (@count > 0)
-	BEGIN
-	
-		PRINT @idTable
-		PRINT @idBill
-		PRINT @count
-		
-		UPDATE dbo.TableFood SET status = N'Có người' WHERE id = @idTable		
-		
-	END		
-	ELSE
-	BEGIN
-	PRINT @idTable
-		PRINT @idBill
-		PRINT @count
-	UPDATE dbo.TableFood SET status = N'Trống' WHERE id = @idTable	
-	END
-	
-END
-GO
-
-CREATE TRIGGER UTG_UpdateBill
-ON Bill FOR UPDATE
-AS 
-BEGIN
-	DECLARE @idBill INT
-	
-	SELECT @idBill = id FROM Inserted	
-	
-	DECLARE @idTable INT
-	
-	SELECT @idTable = idTable FROM dbo.Bill WHERE id = @idBill
-	
-	DECLARE @count int = 0
-	
-	SELECT @count = COUNT(*) FROM dbo.Bill WHERE idTable = @idTable AND (status = 0 or isServed = 0)
-	
-	IF (@count = 0)
-		UPDATE dbo.TableFood SET status = N'Trống' WHERE id = @idTable
-END
-GO
-
-CREATE PROC USP_GetAccountInfo
-AS
-BEGIN
-	SELECT UserName, DisplayName, [Type] FROM Account
-END
-GO
-
-
-CREATE PROC USP_SwitchTable
-@idTable1 INT, @idTable2 int
-AS BEGIN
-
-	DECLARE @idFirstBill int
-	DECLARE @idSecondBill INT
-	
-	SELECT @idSecondBill = id FROM dbo.Bill WHERE idTable = @idTable2 AND (status = 0 or isServed = 0)
-	SELECT @idFirstBill = id FROM dbo.Bill WHERE idTable = @idTable1 AND (status = 0 or isServed = 0)
-	
-	IF (@idSecondBill IS NULL)
-	BEGIN
-		UPDATE dbo.TableFood SET status = N'Trống' WHERE id = @idTable1
-		UPDATE Bill SET idTable = @idTable2 WHERE id = @idFirstBill
-		RETURN
-	END
-
-	IF (@idFirstBill IS NULL)
-	BEGIN
-		UPDATE dbo.TableFood SET status = N'Trống' WHERE id = @idTable2
-		UPDATE Bill SET idTable = @idTable1 WHERE id = @idSecondBill
-		RETURN
-	END
-
-	
-
-	SELECT id INTO IDBillInfoTable FROM dbo.BillInfo WHERE idBill = @idSecondBill
-	
-	UPDATE dbo.BillInfo SET idBill = @idSecondBill WHERE idBill = @idFirstBill
-	
-	UPDATE dbo.BillInfo SET idBill = @idFirstBill WHERE id IN (SELECT * FROM IDBillInfoTable)
-	
-	DROP TABLE IDBillInfoTable
-END
-GO
-
-
-CREATE PROC USP_GetListBillByDate
-@checkIn date, @checkOut date
-AS
-BEGIN
-	SELECT b.id 'Mã đơn', t.name AS [Tên bàn], discount AS [Giảm giá], b.totalPrice AS [Tổng tiền], DateCheckOut AS [Ngày]
-	FROM Bill AS b, TableFood AS t
-	WHERE DateCheckOut >= @checkIn AND DateCheckOut <= @checkOut AND b.status = 1
-	AND t.id = b.idTable
-END
-GO
-
-CREATE PROC USP_GetTotalMoneyByDate
-@checkIn date, @checkOut date
-AS
-BEGIN
-	SELECT SUM(cast(b.TotalPrice as float)) 'totalMoney'
-	FROM Bill AS b, TableFood AS t
-	WHERE DateCheckOut >= @checkIn AND DateCheckOut <= @checkOut AND b.status = 1
-	AND t.id = b.idTable
-END
-GO
-
-CREATE PROC USP_UpdateAccount
-@userName NVARCHAR(100), @displayName NVARCHAR(100), @password NVARCHAR(100), @newPassword NVARCHAR(100)
-AS 
-BEGIN 
-	DECLARE @isRightPass INT = 0
-	SELECT @isRightPass = COUNT(*) FROM Account WHERE UserName = @userName AND PassWord = @password
-
-	IF(@isRightPass = 1)
-	BEGIN 
-		IF (@newPassword = NULL OR @newPassword = '')
-		BEGIN 
-			UPDATE Account SET DisplayName = @displayName WHERE UserName = @userName
-		END 
-		ELSE 
-			UPDATE Account SET DisplayName = @displayName ,PassWord = @newpassword WHERE UserName = @userName
-	END 
-END 
-GO 
-
-CREATE TRIGGER UTG_DeleteBill
-ON Bill FOR DELETE
-AS
-BEGIN
-	DECLARE @idTable INT
-	SELECT @idTable = idTable FROM deleted
-
-	UPDATE TableFood SET status = N'Trống' WHERE id = @idTable
-END
-GO
-
-CREATE PROC USP_NewInsertBillInfo
-@idBill INT, @idFood INT, @count INT
-AS
-BEGIN
-	DECLARE @isExitsBillInfo INT
-	SELECT @isExitsBillInfo = id
-	FROM dbo.BillInfo
-	WHERE idBill = @idBill AND idFood = @idFood
-
-	IF (@isExitsBillInfo > 0)
-	BEGIN
-		IF (@count > 0)
-			UPDATE dbo.BillInfo SET count = @count WHERE idBill = @idBill AND idFood = @idFood
-		ELSE
-			DELETE dbo.BillInfo WHERE idBill = @idBill AND idFood = @idFood
-	END 
-	ELSE
-	BEGIN
-		IF (@count > 0)
-		BEGIN
-			INSERT dbo.BillInfo (idBill, idFood, count)
-			VALUES (@idBill, @idFood, @count)
-		END
-	END
-END 
-GO
-
-CREATE PROC USP_GetListProcessingBill
-AS
-BEGIN
-	SELECT b.id , t.name 'tableName' , b.totalPrice , N'' 'Trạng Thái'  , discount, t.id 'idTable', b.isServed, b.status
-	FROM Bill b, TableFood t
-	WHERE (b.status = 0 OR b.isServed = 0) AND t.id = b.idTable
-END
-GO
 
 CREATE OR ALTER PROC USP_GenerateSampleData
     @StartDate DATE,
@@ -456,7 +189,7 @@ BEGIN
                 END
                 DECLARE @Minute INT = ABS(CHECKSUM(NEWID())) % 60
                 
-                DECLARE @TableID INT = 1 + (ABS(CHECKSUM(NEWID())) % 90)
+                DECLARE @TableID INT = 1 + (ABS(CHECKSUM(NEWID())) % 20)
                 DECLARE @Discount INT = (ABS(CHECKSUM(NEWID())) % 3) * 5
                 
                 -- Random tổng tiền (350,000 - 1,500,000)
@@ -543,3 +276,4 @@ FROM Bill
 WHERE status = 1
 GROUP BY CONVERT(date, DateCheckOut)
 ORDER BY [Ngày]
+GO
