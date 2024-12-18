@@ -18,11 +18,11 @@ namespace vp_back_end.Controllers
         public async Task<ActionResult> CheckExistsAsync([FromQuery] string username, [FromQuery] string password)
         {
             var result = await accountService.CheckExistsAsync(username, password);
-            if (result == false)
+            if (result == null)
             {
                 return NotFound();
             }
-            return Ok();
+            return Ok(new ValidationDTO() { IsAdmin = result.Type });
         }
         [HttpGet("type/{type}")]
         public async Task<ActionResult<List<Account>>> GetAllAsync(int type)

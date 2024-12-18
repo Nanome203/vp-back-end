@@ -13,14 +13,9 @@ public class AccountDAO(RestaurantContext context)
         await _context.Accounts.AddAsync(account);
         return await _context.SaveChangesAsync(); // Return the number of affected rows (>=0)
     }
-    public async Task<bool> CheckExistsAsync(string username, string password)
+    public async Task<Account> CheckExistsAsync(string username)
     {
-        var account = await _context.Accounts.SingleOrDefaultAsync(x => x.UserName == username);
-        if (account != null)
-        {
-            return account.PassWord == password;
-        }
-        return false;
+        return await _context.Accounts.SingleOrDefaultAsync(x => x.UserName == username);
     }
     public async Task<Account?> GetAsync(string username)
     {
