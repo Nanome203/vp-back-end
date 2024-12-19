@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using vp_back_end.Data;
+using vp_back_end.DTO;
 using vp_back_end.Models;
 
 namespace vp_back_end.DAO;
@@ -35,6 +36,29 @@ public class BillDAO(RestaurantContext context)
                     .ToListAsync();
     }
 
+    public async Task<int> EditBillAsync(BillEditDTO bill, int id)
+    {
+        try
+        {
+            var obj = await GetAsync(id);
+            obj.TotalPrice = bill.TotalPrice;
+            foreach (var food in bill.editList)
+            {
+                obj.BillInfos.Add(new BillInfo
+                {
+                    IdFood = food.IdFood,
+                    Count = food.Count,
+                    IdBill = id
+                });
+            }
+            return await _context.SaveChangesAsync();
+
+        }
+        catch
+        {
+            return 0;
+        }
+    }
     public async Task<List<Bill>> GetAllUnpaidAsync()
     {
         return await _context.Bills

@@ -11,6 +11,10 @@ public class BillService(BillDAO dao, TableFoodDAO dao2)
     private readonly BillDAO billDAO = dao;
     private readonly TableFoodDAO tableFoodDAO = dao2;
 
+    public async Task<int> EditBillAsync(BillEditDTO bill, int id)
+    {
+        return await billDAO.EditBillAsync(bill, id);
+    }
     public async Task<int> CreateAsync(BillDTO billDTO)
     {
         try

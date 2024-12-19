@@ -16,9 +16,15 @@ namespace vp_back_end.Controllers
         public async Task<ActionResult> PayBillAsync(int id)
         {
             var result = await billService.PayBillAsync(id);
-            return result != 0 ? NoContent() : BadRequest();
+            return result != 0 ? Ok(await GetAsync(id)) : BadRequest();
         }
 
+        [HttpPatch("{id}/edit")]
+        public async Task<ActionResult> EditBillAsync(BillEditDTO billEdit, int id)
+        {
+            var result = await billService.EditBillAsync(billEdit, id);
+            return result != 0 ? NoContent() : BadRequest();
+        }
         [HttpPost]
         public async Task<ActionResult> CreateAsync(BillDTO billDTO)
         {
