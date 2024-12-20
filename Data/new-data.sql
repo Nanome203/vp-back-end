@@ -20,7 +20,7 @@ CREATE TABLE Account
 	UserName NVARCHAR(100) PRIMARY KEY,
 	DisplayName NVARCHAR(100) NOT NULL DEFAULT N'Admin',
 	PassWord NVARCHAR(1000) NOT NULL DEFAULT 0,
-	Type INT NOT NULL DEFAULT 0, --1: Admin && 0: Staff
+	Type INT NOT NULL DEFAULT 0, --1: Admin, 0: Staff
 	isHidden INT NOT NULL DEFAULT 0 -- 1: Ẩn, 0: Hiện 
 )
 GO
@@ -39,8 +39,8 @@ CREATE TABLE Food
 	name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên',
 	idCategory INT NOT NULL,
 	price FLOAT NOT NULL DEFAULT 0,
-	imageLink NVARCHAR(255) NOT NULL DEFAULT N'unavailable',
 	isHidden INT NOT NULL DEFAULT 0, -- 1: Ẩn, 0: Hiện
+	imageLink NVARCHAR(255) NOT NULL DEFAULT N'unavailable',
 	FOREIGN KEY (idCategory) REFERENCES dbo.FoodCategory(id)
 )
 GO
@@ -49,9 +49,9 @@ CREATE TABLE Bill
 (
 	id INT IDENTITY PRIMARY KEY,
 	DateCheckIn DATETIME NOT NULL DEFAULT GETDATE(),
-	DateCheckOut DATE,
+	DateCheckOut DATETIME,
 	idTable INT NOT NULL,
-	status INT NOT NULL DEFAULT 0, --1: Đã thanh toán && 0: Chưa thanh toán
+	status INT NOT NULL DEFAULT 0, --1: Đã thanh toán, 0: Chưa thanh toán
 	discount INT NOT NULL DEFAULT 0,
 	totalPrice FLOAT NOT NULL DEFAULT 0,
 	isHidden INT NOT NULL DEFAULT 0, -- 1: Ẩn, 0: Hiện
@@ -145,7 +145,6 @@ INSERT INTO Account (UserName, DisplayName, PassWord, Type) VALUES (N'Admin', N'
  (N'Quynh', N'Phan Mạnh Quỳnh', 'staff', 0)
 GO
 
-
 CREATE OR ALTER PROC USP_GenerateSampleData
     @StartDate DATE,
     @EndDate DATE
@@ -176,13 +175,11 @@ BEGIN
         
         WHILE @@FETCH_STATUS = 0
         BEGIN
-            -- Số hóa đơn ngẫu nhiên trong ngày (10-30)
-            DECLARE @BillCount INT = 10 + ABS(CHECKSUM(NEWID())) % 21
+            DECLARE @BillCount INT = 5 + ABS(CHECKSUM(NEWID())) % 11
             DECLARE @BillNumber INT = 1
             
             WHILE @BillNumber <= @BillCount
             BEGIN
-                -- Tạo thời gian ngẫu nhiên
                 DECLARE @Hour INT = CASE 
                     WHEN @BillNumber <= @BillCount/2 THEN 11 + (ABS(CHECKSUM(NEWID())) % 4)
                     ELSE 17 + (ABS(CHECKSUM(NEWID())) % 6)
@@ -192,15 +189,16 @@ BEGIN
                 DECLARE @TableID INT = 1 + (ABS(CHECKSUM(NEWID())) % 20)
                 DECLARE @Discount INT = (ABS(CHECKSUM(NEWID())) % 3) * 5
                 
-                -- Random tổng tiền (350,000 - 1,500,000)
                 DECLARE @TotalPrice FLOAT = 350000 + (ABS(CHECKSUM(NEWID())) % 1150001)
                 
                 DECLARE @CheckInTime DATETIME = DATEADD(MINUTE, @Minute, DATEADD(HOUR, @Hour, CAST(@CurrentDate AS DATETIME)))
+                -- Thời gian checkout sẽ sau checkin 1-3 giờ
+                DECLARE @CheckOutTime DATETIME = DATEADD(MINUTE, 60 + (ABS(CHECKSUM(NEWID())) % 120), @CheckInTime)
 
                 INSERT INTO Bill (DateCheckIn, DateCheckOut, idTable, status, discount, totalPrice)
                 VALUES (
                     @CheckInTime,
-                    @CurrentDate,
+                    @CheckOutTime,
                     @TableID,
                     1,
                     @Discount,
@@ -209,12 +207,9 @@ BEGIN
 
                 DECLARE @CurrentBillId INT = SCOPE_IDENTITY()
                 
-                -- Số món ngẫu nhiên (5-15)
-                DECLARE @FoodCount INT = 5 + (ABS(CHECKSUM(NEWID())) % 11)
-                
-                -- Thêm món chính (2-5 món)
+                -- Thêm món chính (1-3 món)
                 INSERT INTO BillInfo (idBill, idFood, count)
-                SELECT TOP (2 + (ABS(CHECKSUM(NEWID())) % 4))
+                SELECT TOP (1 + (ABS(CHECKSUM(NEWID())) % 3))
                     @CurrentBillId,
                     id,
                     1 + (ABS(CHECKSUM(NEWID())) % 3)
@@ -222,9 +217,9 @@ BEGIN
                 WHERE idCategory IN (1, 3, 4)
                 ORDER BY NEWID()
                 
-                -- Thêm món phụ (1-3 món)
+                -- Thêm món phụ (1-2 món)
                 INSERT INTO BillInfo (idBill, idFood, count)
-                SELECT TOP (1 + (ABS(CHECKSUM(NEWID())) % 3))
+                SELECT TOP (1 + (ABS(CHECKSUM(NEWID())) % 2))
                     @CurrentBillId,
                     id,
                     1 + (ABS(CHECKSUM(NEWID())) % 2)
@@ -232,9 +227,9 @@ BEGIN
                 WHERE idCategory = 2
                 ORDER BY NEWID()
                 
-                -- Thêm đồ uống (2-7 món)
+                -- Thêm đồ uống (1-5 món)
                 INSERT INTO BillInfo (idBill, idFood, count)
-                SELECT TOP (2 + (ABS(CHECKSUM(NEWID())) % 6))
+                SELECT TOP (1 + (ABS(CHECKSUM(NEWID())) % 5))
                     @CurrentBillId,
                     id,
                     1 + (ABS(CHECKSUM(NEWID())) % 3)
